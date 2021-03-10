@@ -118,6 +118,11 @@ select{
 
 }
 
+/* removing pointer-events from button icons, so we can have proper click function on buton*/
+.fa-minus-square, .fa-check-square{
+    pointer-events: none;
+}
+
 li.todo-item{
     margin-right: 5px;
     padding-left: 5px;

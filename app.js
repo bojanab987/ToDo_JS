@@ -3,7 +3,6 @@ const buttonToDo = document.querySelector('.todo-btn');
 const toDoList = document.querySelector('.to-do-list');
 const selectOption = document.querySelector('.filter-list');
 
-
 //Add event listeners
 document.addEventListener('DOMContetLoaded', getToDos)
 buttonToDo.addEventListener('click', addToDo);
@@ -11,6 +10,70 @@ toDoList.addEventListener('click', checkOrDelete);
 selectOption.addEventListener('click', filterList);
 
 //Functions
+
+function addToDo(e) {
+    e.preventDefault();
+    // add div which will contain li and checked and remove button
+    const todoDiv = document.createElement("div");
+    todoDiv.classList.add("todo");
+    //add to do lis
+    const todoItem = document.createElement("li");
+    todoItem.innerText = inputToDo.value;    
+    todoItem.classList.add("todo-item");
+    todoDiv.appendChild(todoItem);
+    //saving to do to local Storage
+    saveLocalToDos(inputToDo.value);
+
+    //add checked button
+    const checkedBtn = document.createElement("button");
+    checkedBtn.innerHTML = '<i class="fas fa-check-square"></i>';
+    checkedBtn.classList.add("checked-btn");
+    todoDiv.appendChild(checkedBtn)
+
+
+    //add remove button
+    const removeBtn = document.createElement("button");
+    removeBtn.innerHTML = '<i class="fas fa-minus-square"></i>';
+    removeBtn.classList.add("remove-btn");
+    todoDiv.appendChild(removeBtn);
+
+    //add div with lis and buttons into the list
+    toDoList.appendChild(todoDiv);
+    //clear input field
+    inputToDo.value = "";
+}
+
+function saveLocalToDos(todo) {
+    //check if we have todo in local storage
+    let todos;
+    if (localStorage.getItem('todos') === null) {
+        todos = [];
+    } else {
+        todos = JSON.parse(localStorage.getItem('todos'));
+    }
+    todos.push(todo);
+    localStorage.setItem('todos', JSON.stringify(todos));
+}
+
+function checkOrDelete(e) {
+    const item = e.target;
+    console.log(e.target)
+    const todo = item.parentElement;
+
+    if (item.classList.contains("remove-btn")) {
+        todo.classList.add("remove");
+        removeLocalStorageTodos(todo);         
+        todo.addEventListener('transitionend', function () {
+            todo.remove();
+         });        
+    }    
+
+    if (item.classList.contains('checked-btn')) {
+        console.log(todo);
+        todo.classList.toggle("completed");
+    }
+}
+
 function getToDos() {
     let todos;
     if (localStorage.getItem("todos") === null) {
@@ -46,70 +109,6 @@ function getToDos() {
     });
 }
 
-function addToDo(e) {
-    e.preventDefault();
-    // add div which will contain li and checked and remove button
-    const todoDiv = document.createElement("div");
-    todoDiv.classList.add("todo");
-    //add to do lis
-    const todoItem = document.createElement("li");
-    todoItem.innerText = inputToDo.value;    
-    todoItem.classList.add("todo-item");
-    todoDiv.appendChild(todoItem);
-    //saving to do to local Storage
-    saveLocalToDos(inputToDo.value);
-
-    //add checked button
-    const checkedBtn = document.createElement("button");
-    checkedBtn.innerHTML = '<i class="fas fa-check-square"></i>';
-    checkedBtn.classList.add("checked-btn"); 
-    checkedBtn.addEventListener('click', checkOrDelete);
-    todoDiv.appendChild(checkedBtn)
-
-
-    //add remove button
-    const removeBtn = document.createElement("button");
-    removeBtn.innerHTML = '<i class="fas fa-minus-square"></i>';
-    removeBtn.classList.add("remove-btn");
-    removeBtn.addEventListener('click', checkOrDelete);
-    todoDiv.appendChild(removeBtn);
-
-    //add div with lis and buttons into the list
-    toDoList.appendChild(todoDiv);
-    //clear input field
-    inputToDo.value = "";
-}
-
-function saveLocalToDos(todo) {
-    //check if we have todo in local storage
-    let todos;
-    if (localStorage.getItem('todos') === null) {
-        todos = [];
-    } else {
-        todos = JSON.parse(localStorage.getItem('todos'));
-    }
-    todos.push(todo);
-    localStorage.setItem('todos', JSON.stringify(todos));
-}
-
-function checkOrDelete(e) {
-    const item = e.target;
-
-    if (item.classList[0] === "remove-btn") {
-        const todo = item.parentElement;
-        todo.classList.add("remove");
-        removeLocalStorageTodos(todo);
-        todo.addEventListener('transitionend', function () {
-            todo.remove();
-        });
-    }
-
-    if (item.classList[0] === "checked-btn") {
-        const todo = item.parentElement;        
-        todo.classList.toggle("completed");
-    }
-}
-
 function removeLocalStorageTodos(todo) {
     let todos;
     if (localStorage.getItem("todos") === null) {
@@ -123,11 +122,9 @@ function removeLocalStorageTodos(todo) {
     localStorage.setItem('todos', JSON.stringify(todos));
 }
 
-
-
 function filterList(e) {
     const todos = toDoList.childNodes;
-    todos.forEach(function (todo) {
+    todos.forEach(function (todo) {        
         switch (e.target.value) {
             case "all":
                 todo.style.display = 'flex';
