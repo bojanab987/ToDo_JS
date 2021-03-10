@@ -1,0 +1,137 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-image: linear-gradient(140deg, #EADEDB 0%, #BC70A4 50%, #BFD641 75%);
+    color:whitesmoke;    
+    height: 100vh;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+header {
+    font-size: 1.3rem;
+    
+}
+
+header, .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 20vh;    
+}
+
+p{
+    margin-right: 10px;
+    font-style: bold;    
+}
+
+form, .selection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 7vh;
+}
+
+form input, form button {
+    padding: 0.3rem;
+    font-size: 1rem;
+    color: #BC70A4;
+    border: none;
+    background: white;  
+    outline: none;      
+}
+
+form button{
+    color: #BC70A4;
+    cursor: pointer;
+    transition: all 0.3s ease;     
+}
+
+.fas fa-plus-square::before{
+    height:max-content;  
+    
+}
+
+form button:hover{
+background:#eeb25f;
+color: white;
+}
+
+select{   
+    outline: none;
+    border: none;
+    padding: 0.3rem;
+    font-size: 1rem;    
+    cursor:pointer;    
+    color: #BC70A4;
+    width: 12.5rem;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+}
+
+.to-do-list{
+    min-width: 30%;
+    list-style: none;
+}
+
+.todo{
+    font-size: 1.5rem;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.7s ease-in;
+    background-color: white;
+    color:#BC70A4;
+    margin-bottom: 0.5rem;
+}
+
+.todo li{
+    flex: auto;
+}
+.remove-btn, .checked-btn{    
+    border:none;
+    cursor: pointer;
+    font-size: 1rem;
+    margin: 5px;
+    outline: none;
+    color:white;
+    background-color: white;
+}
+
+.remove-btn{
+    color: red;    
+}
+
+.checked-btn{
+    color: yellowgreen;
+    
+}
+.checked-btn:hover, .remove-btn:hover{
+    opacity: 0.6;   
+
+}
+
+li.todo-item{
+    margin-right: 5px;
+    padding-left: 5px;
+}
+
+.completed {
+    text-decoration: line-through;
+    opacity: 0.7;
+}
+
+.remove{
+    transform: translate(5rem) ;
+    opacity:0;
+}
+
+
+
